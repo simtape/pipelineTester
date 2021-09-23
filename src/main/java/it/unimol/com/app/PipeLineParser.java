@@ -27,13 +27,14 @@ public class PipeLineParser implements Parser {
     public void parse() {
 
         try {
-            inputStream = new FileInputStream(new File("src/main/resources/maven_2.yml"));
+            inputStream = new FileInputStream(new File("src/main/resources/example_notifier.yml"));
 
         } catch (IOException e) {
         }
         Yaml yaml = new Yaml();
         Map<String, Object> data = yaml.load(inputStream);
 
+        pipeLine.setName(data.get("name").toString());
         //iteration on the jobs hash maps
         if (data.containsKey("jobs")) {
             Map jobsMap = (Map) data.get("jobs");
@@ -50,7 +51,7 @@ public class PipeLineParser implements Parser {
                 if (subJobMap.containsKey("steps")) {
 
                     ArrayList<Map> stepsArray = (ArrayList) subJobMap.get("steps");
-                    for (Map object : stepsArray) {
+                  /*  for (Map object : stepsArray) {
                         Step step = new Step();
 
                         if (object.containsKey("uses")) {
@@ -65,18 +66,16 @@ public class PipeLineParser implements Parser {
                             step.setName(object.get("name").toString());
 
                         }
-                        steps.add(step);
-                    }
-                    job.setSteps(steps);
 
+                        steps.add(step);
+                    }*/
+                    //job.setSteps(steps);
+                    job.setAllSteps(stepsArray);
                 }
+                System.out.println("NAME: " + pipeLine.getName());
                 System.out.println("JOB: " + job.getName_type());
                 System.out.println("RUNS ON: " + job.getRuns_on());
-                System.out.println("STEPS");
-                for (Step step : job.getSteps()) {
-                    System.out.println(step.toString());
-
-                }
+                System.out.println("STEPS" + job.getAllSteps());
                 jobs.add(job);
             }
 
