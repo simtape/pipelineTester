@@ -1,10 +1,12 @@
 package it.unimol.com.app.pipeline_utilities;
 
+import java.util.Map;
+
 public class Step {
     private String uses;
     private String name;
     private String run;
-    private String with;
+    private Object with;
 
     public String getUses() {
         return uses;
@@ -13,6 +15,7 @@ public class Step {
     public void setUses(String uses) {
         this.uses = uses;
     }
+
 
     public String getName() {
         return name;
@@ -30,11 +33,11 @@ public class Step {
         this.run = run;
     }
 
-    public String getWith() {
+    public Object getWith() {
         return with;
     }
 
-    public void setWith(String with) {
+    public void setWith(Object with) {
         this.with = with;
     }
 

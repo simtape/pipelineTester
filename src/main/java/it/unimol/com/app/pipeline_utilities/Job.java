@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Job {
     private String name_type;
-    //private List<Step> steps;
+    private List<Step> steps;
     private String runs_on;
     private ArrayList<Map> allSteps = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class Job {
         this.name_type = name_type;
     }
 
-/*
+
     public List<Step> getSteps() {
         return steps;
     }
@@ -35,7 +35,7 @@ public class Job {
     public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
-*/
+
 
     public ArrayList<Map> getAllSteps() {
         return allSteps;
