@@ -8,7 +8,6 @@
     <artifactId>tesijar</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>untitled</module>
         <module>parser</module>
         <module>repo_cloner</module>
     </modules>
