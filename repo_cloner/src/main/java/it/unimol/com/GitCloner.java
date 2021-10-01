@@ -16,6 +16,8 @@ public class GitCloner {
         return gitCloner;
     }
 
+    private String name_dir;
+
     private GitCloner() {
     }
 
@@ -34,6 +36,10 @@ public class GitCloner {
 
         System.out.println("Insert uri of repository to download: ");
         String uri = sc.nextLine();
+
+        System.out.println("Insert name of the directory: ");
+        name_dir =sc.nextLine();
+
 
         try {
             downloadAndClone(uri);

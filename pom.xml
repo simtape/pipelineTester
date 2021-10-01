@@ -10,6 +10,7 @@
     <modules>
         <module>parser</module>
         <module>repo_cloner</module>
+        <module>plugins</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

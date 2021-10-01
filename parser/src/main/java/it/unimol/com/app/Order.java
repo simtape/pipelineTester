@@ -1,5 +1,6 @@
 package it.unimol.com.app;
 
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -49,6 +50,8 @@ public class Order {
                 ", customerName='" + customerName + '\'' +
                 ", orderLines=" + orderLines +
                 '}';
+
+
     }
 
     public Order() {
