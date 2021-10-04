@@ -12,23 +12,26 @@ public class RowDestroyer implements Plugin {
     @Override
     public void run() {
         try {
-            File file = new File("C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\homework_asd\\src\\main\\java\\it\\unimol\\project\\Main.java");
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            File oldMain = new File("C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\homework_asd\\src\\main\\java\\it\\unimol\\project\\Main.java");
+            BufferedReader br = new BufferedReader(new FileReader(oldMain));
 
+            File newMain = new File("C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\homework_asd\\src\\main\\java\\it\\unimol\\project\\Main2.java");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(newMain));
 
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("{"))
-                    bw.write(" ");
-
+            String currentLine = br.readLine();
+            String lineToRemove = "}";
+            while (currentLine != null) {
+                System.out.println(currentLine);
+                String trimmedLine = currentLine.trim();
+                if (!trimmedLine.equals(lineToRemove))
+                    bw.write(currentLine + System.getProperty("line.separator"));
+                currentLine = br.readLine();
             }
+            br.close();
             bw.close();
-            reader.close();
-
-
-        } catch (
-                IOException e) {
+            oldMain.delete();
+            newMain.renameTo(oldMain);
+        } catch (IOException e) {
 
         }
 
