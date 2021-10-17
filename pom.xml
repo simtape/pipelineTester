@@ -23,6 +23,7 @@
         <module>parser</module>
         <module>repo_cloner</module>
         <module>plugins</module>
+        <module>utilities</module>
     </modules>
     <dependencies>
         <dependency>
