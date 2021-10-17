@@ -37,9 +37,10 @@ public class RowDestroyer implements Plugin {
     public void run() throws NotAJavaProject {
         filesToChange = exploreDirectories();
         for (Project project : filesToChange) {
-            System.out.println("PROJECTS LENGTH: " + filesToChange.size());
+            System.out.println("******************************************");
             System.out.println("PROJECT NAME: " + project.getName());
             System.out.println("PROJECT TYPE: " + project.getProjectType());
+            System.out.println("                     ");
             if (project.getProjectType() == ProjectType.NOT_JAVA) {
                 //throw new NotAJavaProject(project.getName() + " is not a Java project");
             } else {
@@ -56,6 +57,9 @@ public class RowDestroyer implements Plugin {
                     List<String> lines = new ArrayList<>();
 
                     String line = br.readLine();
+                    System.out.println(" ");
+                    System.out.println("OLD FILE: ");
+                    System.out.println(" ");
                     while (line != null) {
                         if (!(line.isEmpty() || line.contains("System.out.println") || line.contains("//"))) {
                             lines.add(line);
@@ -63,17 +67,25 @@ public class RowDestroyer implements Plugin {
                         System.out.println(line);
                         line = br.readLine();
                     }
-                    int index = (int)(Math.random() * lines.size());
+                    int index = (int) (Math.random() * lines.size());
+                    System.out.println("    ");
                     System.out.println("line about to be mutate: " + lines.get(index));
-                    if(lines.get(index).contains(";")){
+                    System.out.println("    ");
+                    if (lines.get(index).contains(";")) {
                         String newline = lines.get(index).replace(";", "");
                         lines.set(index, newline);
-                    }else{
+
+                    } else {
                         String newline = lines.get(index).replace(lines.get(index), "");
                         lines.set(index, newline);
+
                     }
 
-                    for(String string: lines){
+
+                    System.out.println(" ");
+                    System.out.println("NEW FILE: ");
+                    System.out.println(" ");
+                    for (String string : lines) {
                         bw.write(string);
                         bw.newLine();
                         System.out.println(string);
@@ -98,7 +110,7 @@ public class RowDestroyer implements Plugin {
 
         for (File file : directories) {
             String nameOfProject = file.getAbsolutePath().replace(directoryName + "\\", "");
-            System.out.println("name of project: " + nameOfProject);
+
 
             Project project = new Project();
             project.setName(nameOfProject);

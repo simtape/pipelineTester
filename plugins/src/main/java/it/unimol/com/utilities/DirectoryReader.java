@@ -15,7 +15,6 @@ public class DirectoryReader {
             List<File> fList = Arrays.asList(directory.listFiles());
             for (File file : fList) {
                 if (!pathsToAvoid.contains(file.getAbsolutePath())) {
-                    System.out.println(file.getAbsolutePath());
                     resultList.add(file);
                 }
             }
