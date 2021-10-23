@@ -1,2 +1,3 @@
-https://github.com/MrJo1996/AnswerOverFlow.git
+https://github.com/simtape/homework_asd.git
+https://github.com/simtape/myFitNoteAndroid.git
 https://github.com/simtape/examIA.git

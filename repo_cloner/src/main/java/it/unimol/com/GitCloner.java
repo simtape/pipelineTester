@@ -1,15 +1,11 @@
 package it.unimol.com;
 
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.TransportException;
-
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class GitCloner {
 
@@ -24,23 +20,25 @@ public class GitCloner {
     private GitCloner() {
     }
 
-    private void downloadAndClone() throws IOException, GitAPIException {
-        File file = new File("C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\repo_cloner\\src\\main\\resources\\list_repositories.txt");
+    private void downloadAndClone() throws IOException {
+
+        File file = new File("repo_cloner/src/main/resources/list_repositories.txt");
+
         BufferedReader br = new BufferedReader(new FileReader(file));
-
         String uri = br.readLine();
-        while (uri != null) {
+        new File("temp").mkdirs();
 
-            Git.cloneRepository()
-                    .setURI(uri)
-                    .call();
+        while (uri != null) {
             System.out.println(uri);
+            String command = "cmd /c cd temp && git clone "+ uri;
+            CommandLine cmdLine = CommandLine.parse( command);
+            DefaultExecutor executor = new DefaultExecutor();
+            int exitValue = executor.execute(cmdLine);
             uri = br.readLine();
         }
     }
 
     public void run() {
-        Scanner sc = new Scanner(System.in);
 
 
         try {
