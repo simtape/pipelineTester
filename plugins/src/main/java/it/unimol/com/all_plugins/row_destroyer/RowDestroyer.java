@@ -17,25 +17,13 @@ import java.util.stream.Stream;
 
 @AutoService(Plugin.class)
 public class RowDestroyer implements Plugin {
-    DirectoryReader directoryReader = new DirectoryReader();
-    final List<String> pathsToAvoid = Arrays.asList(
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\.git",
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\.gitignore",
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\.idea",
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\utilities\n",
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\target",
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\src",
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\repo_cloner",
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\pom.xml",
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\plugins",
-            "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\parser"
-    );
-    final String directoryName = "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester";
+
+    final String directoryName = "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\temp";
     List<Project> filesToChange;
 
     @Override
     public void run() throws NotAJavaProject {
-        filesToChange = exploreDirectories();
+        filesToChange = DirectoryReader.getDirectoryReader().exploreDirectories(directoryName);
         for (Project project : filesToChange) {
             System.out.println("******************************************");
             System.out.println("PROJECT NAME: " + project.getName());
@@ -104,50 +92,6 @@ public class RowDestroyer implements Plugin {
         }
     }
 
-    List<Project> exploreDirectories() {
-        List<File> directories = directoryReader.read(directoryName, pathsToAvoid);
-        List<Project> projects = new ArrayList<>();
 
-        for (File file : directories) {
-            String nameOfProject = file.getAbsolutePath().replace(directoryName + "\\", "");
-
-
-            Project project = new Project();
-            project.setName(nameOfProject);
-            JavaFiles javaFiles1 = new JavaFiles();
-            List<Path> pathsJavaFiles = new ArrayList<>();
-
-            boolean isJava = false;
-            Path path = Paths.get(file.getAbsolutePath());
-            List<Path> result = new ArrayList<>();
-            try {
-                Stream<Path> walk = Files.walk(path);
-                result = walk.filter(Files::isRegularFile)
-                        .collect(Collectors.toList());
-            } catch (IOException e) {
-
-            }
-            for (Path p : result) {
-                if (p.toFile().isFile() && p.toFile().getAbsolutePath().endsWith(".java")) {
-                    isJava = true;
-                    pathsJavaFiles.add(p);
-
-                    javaFiles1.setFiles(pathsJavaFiles);
-                }
-
-
-            }
-            if (isJava)
-                project.setProjectType(ProjectType.JAVA);
-            else
-                project.setProjectType(ProjectType.NOT_JAVA);
-
-            project.setJavaFiles(javaFiles1);
-            projects.add(project);
-
-        }
-
-        return projects;
-    }
 
 }

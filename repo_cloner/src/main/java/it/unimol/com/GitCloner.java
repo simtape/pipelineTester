@@ -1,11 +1,15 @@
 package it.unimol.com;
 
+import it.unimol.com.utilities.DirectoryReader;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.io.FileUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class GitCloner {
 
@@ -35,6 +39,18 @@ public class GitCloner {
             DefaultExecutor executor = new DefaultExecutor();
             int exitValue = executor.execute(cmdLine);
             uri = br.readLine();
+        }
+
+        List<File>repositories = DirectoryReader.directoryReader.read("C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\temp");
+        for(File repo : repositories){
+            String destination = "temp/clone_" + repo.getName();
+            File destDir = new File(destination);
+
+            try {
+                FileUtils.copyDirectory(repo, destDir);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
