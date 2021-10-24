@@ -6,25 +6,25 @@ import it.unimol.com.Plugin;
 import it.unimol.com.utilities.DirectoryReader;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @AutoService(Plugin.class)
 public class RowDestroyer implements Plugin {
 
     final String directoryName = "C:\\Users\\scimo\\IdeaProjects\\pipeline_tester\\temp";
-    List<Project> filesToChange;
+    List<Project> files, repositories = new ArrayList<>();
 
     @Override
     public void run() throws NotAJavaProject {
-        filesToChange = DirectoryReader.getDirectoryReader().exploreDirectories(directoryName);
-        for (Project project : filesToChange) {
+        files = DirectoryReader.getDirectoryReader().exploreDirectories(directoryName);
+        for (Project p : files) {
+            if (p.getName().contains("clone_"))
+                repositories.add(p);
+        }
+        System.out.println("SIZE OF ALL DIR: " + files.size());
+        System.out.println("SIZE OF REPOS CLONED: " + repositories.size());
+        for (Project project : repositories) {
             System.out.println("******************************************");
             System.out.println("PROJECT NAME: " + project.getName());
             System.out.println("PROJECT TYPE: " + project.getProjectType());
@@ -91,7 +91,6 @@ public class RowDestroyer implements Plugin {
             }
         }
     }
-
 
 
 }
